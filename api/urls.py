@@ -2,7 +2,8 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from .views import (
-    CountryViewSet, ManufacturerViewSet, CarViewSet, CommentViewSet
+    CountryViewSet, ManufacturerViewSet, CarViewSet, CommentViewSet,
+    export_data
 )
 
 app_name = 'api'
@@ -16,4 +17,5 @@ router.register('comments', CommentViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('export-data', export_data),
 ]

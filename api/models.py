@@ -8,6 +8,9 @@ User = get_user_model()
 class Country(models.Model):
     name = models.CharField('Название', max_length=30)
 
+    class Meta:
+        verbose_name_plural = 'Countries'
+
     def __str__(self):
         return self.name
 
@@ -69,4 +72,4 @@ class Comment(models.Model):
     text = models.TextField('Текст комментария')
 
     def __str__(self):
-        return self.text[:15]
+        return self.text[:10]
