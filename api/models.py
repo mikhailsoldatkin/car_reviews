@@ -1,18 +1,19 @@
 from django.contrib.auth import get_user_model
+from django.core.validators import RegexValidator
 from django.db import models
 
 User = get_user_model()
 
 
 class Country(models.Model):
-    name = models.CharField('Название')
+    name = models.CharField('Название', max_length=30)
 
     def __str__(self):
         return self.name
 
 
 class Manufacturer(models.Model):
-    name = models.CharField('Название')
+    name = models.CharField('Название', max_length=30)
     country = models.ForeignKey(
         Country,
         related_name='manufacturers',
@@ -26,15 +27,31 @@ class Manufacturer(models.Model):
 
 
 class Car(models.Model):
-    name = models.CharField('Название')
+    name = models.CharField('Название', max_length=30)
     manufacturer = models.ForeignKey(
         Manufacturer,
         related_name='cars',
         on_delete=models.CASCADE,
         verbose_name='Производитель',
     )
-    start_year = models.PositiveIntegerField('Год начала выпуска')
-    end_year = models.PositiveIntegerField('Год окончания выпуска')
+    start_year = models.PositiveIntegerField(
+        'Год начала выпуска',
+        validators=[
+            RegexValidator(
+                regex='^(19|20)\d{2}$',
+                message='Значение не является годом от 1900 до 2099!'
+            )
+        ]
+    )
+    end_year = models.PositiveIntegerField(
+        'Год окончания выпуска',
+        validators=[
+            RegexValidator(
+                regex='^(19|20)\d{2}$',
+                message='Значение не является годом от 1900 до 2099!'
+            )
+        ]
+    )
 
     def __str__(self):
         return self.name
