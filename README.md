@@ -21,7 +21,7 @@ docker-compose up -d
 docker-compose exec backend python manage.py createsuperuser
 ```
 
-- После запуска проект будут доступен по адресу: [http://localhost/](http://localhost/)
+- После запуска проект будут доступен по адресу: [localhost](http://localhost:8000)
 
 
 - Для остановки контейнеров Docker:
