@@ -15,10 +15,11 @@ services:
     build: .
     command: bash -c "
       python manage.py migrate
+      && python manage.py loaddata db_data.json
       && python manage.py runserver 0.0.0.0:8000
       "
     volumes:
-      - static_value:/app/static/
+      - .:/app
     ports:
       - "8000:8000"
     environment:
@@ -30,7 +31,6 @@ services:
 
 
 volumes:
-  static_value:
   postgres_data:
 
 
