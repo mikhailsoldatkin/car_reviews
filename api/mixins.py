@@ -7,12 +7,10 @@ from rest_framework.mixins import (
     ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin,
     RetrieveModelMixin
 )
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 
-class CustomViewSet(ListModelMixin, CreateModelMixin, RetrieveModelMixin,
-                    DestroyModelMixin, UpdateModelMixin,
-                    GenericViewSet):
+class CustomViewSet(ModelViewSet):
 
     @action(
         detail=False,

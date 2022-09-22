@@ -30,6 +30,11 @@ docker-compose down -v      # с их удалением
 docker-compose stop         # без удаления
 ```
 
+- Для тестирования API через Postman:
+```
+в коллекции Postman импортировать файл postman_collection.json
+```
+
 ### Автор
 
 Михаил Солдаткин (c) 2022

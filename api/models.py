@@ -57,7 +57,7 @@ class Car(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return f'{self.manufacturer} {self.name}'
 
 
 class Comment(models.Model):
