@@ -6,7 +6,7 @@ User = get_user_model()
 
 
 class Country(models.Model):
-    name = models.CharField('Название', max_length=30)
+    name = models.CharField('Название', max_length=30, unique=True)
 
     class Meta:
         verbose_name_plural = 'Countries'
@@ -16,7 +16,7 @@ class Country(models.Model):
 
 
 class Manufacturer(models.Model):
-    name = models.CharField('Название', max_length=30)
+    name = models.CharField('Название', max_length=30, unique=True)
     country = models.ForeignKey(
         Country,
         related_name='manufacturers',
@@ -30,7 +30,7 @@ class Manufacturer(models.Model):
 
 
 class Car(models.Model):
-    name = models.CharField('Название', max_length=30)
+    name = models.CharField('Название', max_length=30, unique=True)
     manufacturer = models.ForeignKey(
         Manufacturer,
         related_name='cars',

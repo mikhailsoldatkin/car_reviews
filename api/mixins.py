@@ -1,35 +1,64 @@
 import csv
 
+import xlsxwriter
 from django.http import HttpResponse
 from rest_framework.decorators import action
 from rest_framework.mixins import (
-    ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin
+    ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin,
+    RetrieveModelMixin
 )
-from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import GenericViewSet
 
 
-class CustomViewSet(ListModelMixin, CreateModelMixin,
+class CustomViewSet(ListModelMixin, CreateModelMixin, RetrieveModelMixin,
                     DestroyModelMixin, UpdateModelMixin,
                     GenericViewSet):
 
+    @action(
+        detail=False,
+        url_path='export-data'
+    )
     def export_data(self, request):
-        parameter = request.GET.get('parameter')
         model = self.queryset.model
-        object_list = model.objects.all()
+        parameter = request.GET.get('parameter')
+        filename = f'{model._meta.model_name}.{parameter}'
+        field_names = [field.name for field in model._meta.fields]
 
-        meta = model._meta
-        field_names = [field.name for field in meta.fields]
-        filename = f'{meta}.{parameter}'
+        if parameter == 'csv':
 
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = f'attachment; filename={filename}'
+            response = HttpResponse(content_type='text/csv')
+            response[
+                'Content-Disposition'] = f'attachment; filename={filename}'
 
-        writer = csv.writer(response)
-        writer.writerow(field_names)
+            writer = csv.writer(response)
+            writer.writerow(field_names)
 
-        objects = object_list.values_list(field_names)
-        for obj in objects:
-            writer.writerow(obj)
+            objects = model.objects.all().values_list(*field_names)
+            for obj in objects:
+                writer.writerow(obj)
 
-        return response
+            return response
+
+        if parameter == 'xlsx':
+
+            response = HttpResponse(content_type='application/vnd.ms-excel')
+            response[
+                'Content-Disposition'] = f'attachment; filename={filename}'
+
+            workbook = xlsxwriter.Workbook(response)
+            worksheet = workbook.add_worksheet(f'{model._meta.model_name}')
+
+            row_num = 0
+            columns = field_names
+            for col_num in range(len(columns)):
+                worksheet.write(row_num, col_num, columns[col_num])
+
+            rows = model.objects.all().values_list(*field_names)
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    worksheet.write(row_num, col_num, row[col_num])
+
+            workbook.close()
+
+            return response

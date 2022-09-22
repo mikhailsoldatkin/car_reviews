@@ -16,6 +16,7 @@ itypes==1.2.0
 Jinja2==3.1.2
 MarkupSafe==2.1.1
 oauthlib==3.2.1
+psycopg2-binary==2.9.3
 pycparser==2.21
 PyJWT==2.5.0
 python-dotenv==0.21.0
@@ -29,3 +30,5 @@ social-auth-core==4.3.0
 sqlparse==0.4.2
 uritemplate==4.1.1
 urllib3==1.26.12
+XlsxWriter==3.0.3
+

@@ -1,20 +1,12 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import SerializerMethodField
-from rest_framework.relations import PrimaryKeyRelatedField, SlugRelatedField
+from rest_framework.relations import SlugRelatedField
 from rest_framework.serializers import ModelSerializer
 
 from .models import Country, Manufacturer, Car, Comment
 
 
-class CommentReadSerializer(ModelSerializer):
-    car = SlugRelatedField(slug_field='name', queryset=Car.objects.all())
-
-    class Meta:
-        model = Comment
-        fields = ('id', 'author_email', 'car', 'created', 'text')
-
-
-class CommentWriteSerializer(ModelSerializer):
+class CommentSerializer(ModelSerializer):
     car = SlugRelatedField(slug_field='name', queryset=Car.objects.all())
 
     class Meta:
@@ -30,8 +22,8 @@ class CommentWriteSerializer(ModelSerializer):
 class CarSerializer(ModelSerializer):
     manufacturer = SlugRelatedField(slug_field='name',
                                     queryset=Manufacturer.objects.all())
-    comments_count = SerializerMethodField()
-    comments = CommentReadSerializer(many=True)
+    comments_count = SerializerMethodField(read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Car
@@ -48,15 +40,10 @@ class CarSerializer(ModelSerializer):
     def get_comments_count(self, obj):
         return obj.comments.count()
 
-    def validate_end_year(self, value):
-        start_year = self.initial_data['start_year']
-        if value >= start_year:
-            return value
-
 
 class ManufacturerSerializer(ModelSerializer):
-    cars = SerializerMethodField()
-    comments_count = SerializerMethodField()
+    cars = SerializerMethodField(read_only=True)
+    comments_count = SerializerMethodField(read_only=True)
     country = SlugRelatedField(slug_field='name',
                                queryset=Country.objects.all())
 
@@ -72,7 +59,7 @@ class ManufacturerSerializer(ModelSerializer):
 
 
 class CountrySerializer(ModelSerializer):
-    manufacturers = SerializerMethodField()
+    manufacturers = SerializerMethodField(read_only=True)
 
     class Meta:
         model = Country
