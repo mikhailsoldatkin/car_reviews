@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "141b4de3-987c-42c3-beb4-3d902ac80d10",
+		"_postman_id": "cb291570-05c8-4c88-bcc4-2d531dddae16",
 		"name": "Car Reviews",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20131951"
@@ -639,6 +639,219 @@
 								"countries",
 								"3",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Export Data",
+			"item": [
+				{
+					"name": "Экспорт стран в csv",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/countries/export-data?parameter=csv",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"countries",
+								"export-data"
+							],
+							"query": [
+								{
+									"key": "parameter",
+									"value": "csv"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Экспорт производителей в csv",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/manufacturers/export-data?parameter=csv",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"manufacturers",
+								"export-data"
+							],
+							"query": [
+								{
+									"key": "parameter",
+									"value": "csv"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Экспорт автомобилей в csv",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/cars/export-data?parameter=csv",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"cars",
+								"export-data"
+							],
+							"query": [
+								{
+									"key": "parameter",
+									"value": "csv"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Экспорт комментариев в csv",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/comments/export-data?parameter=csv",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"comments",
+								"export-data"
+							],
+							"query": [
+								{
+									"key": "parameter",
+									"value": "csv"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Экспорт стран в  xlsx",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/countries/export-data?parameter=xlsx",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"countries",
+								"export-data"
+							],
+							"query": [
+								{
+									"key": "parameter",
+									"value": "xlsx"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Экспорт производителей в  xlsx",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/manufacturers/export-data?parameter=xlsx",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"manufacturers",
+								"export-data"
+							],
+							"query": [
+								{
+									"key": "parameter",
+									"value": "xlsx"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Экспорт автомобилей в  xlsx",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/cars/export-data?parameter=xlsx",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"cars",
+								"export-data"
+							],
+							"query": [
+								{
+									"key": "parameter",
+									"value": "xlsx"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Экспорт комментариев в  xlsx",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/comments/export-data?parameter=xlsx",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"comments",
+								"export-data"
+							],
+							"query": [
+								{
+									"key": "parameter",
+									"value": "xlsx"
+								}
 							]
 						}
 					},

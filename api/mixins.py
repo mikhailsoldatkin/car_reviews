@@ -3,18 +3,16 @@ import csv
 import xlsxwriter
 from django.http import HttpResponse
 from rest_framework.decorators import action
-from rest_framework.mixins import (
-    ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin,
-    RetrieveModelMixin
-)
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.viewsets import ModelViewSet
 
 
 class CustomViewSet(ModelViewSet):
 
     @action(
         detail=False,
-        url_path='export-data'
+        url_path='export-data',
+        permission_classes=[IsAuthenticatedOrReadOnly]
     )
     def export_data(self, request):
         model = self.queryset.model
@@ -25,8 +23,7 @@ class CustomViewSet(ModelViewSet):
         if parameter == 'csv':
 
             response = HttpResponse(content_type='text/csv')
-            response[
-                'Content-Disposition'] = f'attachment; filename={filename}'
+            response['Content-Disposition'] = f'attachment;filename={filename}'
 
             writer = csv.writer(response)
             writer.writerow(field_names)
@@ -40,10 +37,10 @@ class CustomViewSet(ModelViewSet):
         if parameter == 'xlsx':
 
             response = HttpResponse(content_type='application/vnd.ms-excel')
-            response[
-                'Content-Disposition'] = f'attachment; filename={filename}'
+            response['Content-Disposition'] = f'attachment;filename={filename}'
 
-            workbook = xlsxwriter.Workbook(response)
+            workbook = xlsxwriter.Workbook(response,
+                                           options={'remove_timezone': True})
             worksheet = workbook.add_worksheet(f'{model._meta.model_name}')
 
             row_num = 0
